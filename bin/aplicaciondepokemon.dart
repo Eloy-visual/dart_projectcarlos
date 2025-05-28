@@ -11,7 +11,11 @@ void main() async {
 
   switch (opcion) {
     case "1":
-      Menus.registro();
+      Usuario? usuario = await Menus.registro();
+      if (usuario != null) {
+        stdout.writeln("Registro exitoso. ¡Bienvenido, ${usuario.user}!");
+        await buscarPokemon();
+      }
       break;
 
     case "2":
@@ -19,26 +23,15 @@ void main() async {
       Usuario usuario = Usuario();
 
       do {
-        stdout.writeln("Introduce tu nombre de usuario:");
+        stdout.writeln("Introduce tu nombre de usuario.");
         String nombre = stdin.readLineSync() ?? '';
-        stdout.writeln("Ahora introduce tu contraseña:");
+        stdout.writeln("Ahora introduce tu contraseña.");
         String password = stdin.readLineSync() ?? '';
 
         if (nombre == usuario.user && password == usuario.password) {
           stdout.writeln("Login correcto");
           logueado = true;
-
-          // Acción tras login exitoso: buscar un Pokémon
-          stdout.writeln("Escribe el nombre del Pokémon que deseas buscar:");
-          String nombrePokemon = stdin.readLineSync() ?? '';
-
-          Pokemon pokeInstance = Pokemon();
-          Pokemon? poke = await pokeInstance.obtenerPokemon(nombrePokemon);
-
-          if (poke != null) {
-            Pokemon.imprimirInfo(poke);
-          }
-
+          await buscarPokemon();
         } else {
           stdout.writeln("Login incorrecto");
         }
@@ -46,7 +39,20 @@ void main() async {
       break;
 
     default:
-      stdout.writeln("Opción no válida");
+      stdout.writeln("Opción no válida para este programa.");
       break;
+  }
+}
+
+Future<void> buscarPokemon() async {
+  stdout.writeln("Escribe el nombre del pokemon.");
+  String nombrePokemon = stdin.readLineSync() ?? '';
+
+  Pokemon? poke = await Pokemon.obtenerPokemon(nombrePokemon);
+
+  if (poke != null) {
+    poke.imprimirInfo();
+  } else {
+    stdout.writeln("No se encontró información sobre el Pokémon '$nombrePokemon'.");
   }
 }

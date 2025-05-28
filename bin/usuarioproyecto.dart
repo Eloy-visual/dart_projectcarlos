@@ -1,9 +1,8 @@
 import 'baseDeDatosproyecto.dart';
 import 'dart:io';
 class Usuario {
-  String _user = "carlos";
-  String _password = "123456";
-  
+  String _user ="carlos";
+  String _password = "1wdf5d4";
   String get user => _user;
   String get password => _password;
   
