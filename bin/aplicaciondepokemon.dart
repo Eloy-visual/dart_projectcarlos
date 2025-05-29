@@ -5,6 +5,7 @@ import 'usuarioproyecto.dart';
 import 'pokemon.dart';
 
 void main() async {
+  
   await DataBase.instalarBBDD();
 
   String opcion = Menus.inicio();
