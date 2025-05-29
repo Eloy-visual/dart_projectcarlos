@@ -47,11 +47,9 @@ void main() async {
 Future<void> buscarPokemon() async {
   stdout.writeln("Escribe el nombre del pokemon.");
   String nombrePokemon = stdin.readLineSync() ?? '';
-
-  Pokemon? poke = await Pokemon.obtenerPokemon(nombrePokemon);
-
+  Pokemon? poke = await Pokemon().obtenerPokemon(nombrePokemon.toLowerCase());
   if (poke != null) {
-    poke.imprimirInfo();
+    Pokemon.imprimirInfo(poke);
   } else {
     stdout.writeln("No se encontró información sobre el Pokémon '$nombrePokemon'.");
   }
